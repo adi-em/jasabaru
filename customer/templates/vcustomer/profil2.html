@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+{% include 'customernavbar.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+    </style>
+      <main>
+        <div class="our-services" style="background-color: rgb(233, 233, 233);">
+            <div class="w3-content w3-margin-top" style="max-width:1400px;">
+                <div style="padding-top: 20px;" class="w3-row-padding">                         
+                  <div class="w3-third">
+                    <div class="w3-white w3-text-grey w3-card-4">
+                      <div class="w3-display-container">
+                    <img src="{{ profil.foto.url }}" style="width:100%" alt="Avatar">
+                  </div>
+                  <div class="w3-container">
+                    <hr>
+                    <p class="w3-large"><b></i>Catatan</b></p><br>
+                    <h4>{{profil.catatan}}</h4>
+                    <br>
+                  </div>
+                  <div class="w3-container">
+                    <hr>
+                    <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skill / Kemampuan</b></p><br>
+                    <h4>{{profil.skil}}</h4>
+                    <br>
+                  </div>
+                </div><br>
+              </div>
+              <div class="w3-twothird">
+                <div class="w3-container w3-card w3-white w3-margin-bottom">
+                  {% if idusr == xd %}
+                      <a style="margin-top: 30px;" href="{% url 'editgurucustomer' %}" class="btn btn-primary btn-sm float-right">Edit Profil</a>
+                    {% endif %}
+                  <h2 class="w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>PORTOFOLIO</h2>
+                  <div class="w3-container">
+                    <h5><b>Nama Lengkap</b></h5>
+                    <h4>{{profil.nama}}</h4>
+                    <hr>
+                  </div>
+                  <div class="w3-container">
+                    <h5><b>Nomer Aktif</b></h5>
+                    <h4>{{profil.nohp}}</h4>
+                    <hr>
+                  </div>
+                  <div class="w3-container">
+                    <h5><b>Alamat</b></h5>
+                    <h4>{{profil.alamat}}</h4>
+                    <hr>
+                  </div>
+                  <div class="w3-container">
+                    <h5><b>Jenis Kelamin</b></h5>
+                    <h4>{{profil.gender}}</h4>
+                    <hr>
+                  </div>
+                  <div class="w3-container">
+                    <h5><b>Usia</b></h5>
+                    <h4>{{profil.tanggal_lahir}}</h4>
+                    <hr>
+                  </div>
+                </div>
+                <div class="w3-container w3-card w3-white w3-margin-bottom">
+                  <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>PRESTASI</h2>
+                  <div class="w3-container">
+                    <h5><b>Link Youtube</b></h5>
+                    <h4>{{profil.link}}</h4>
+                    <hr>
+                  </div>
+                  <div class="w3-container">
+                    <h5><b>Foto Bukti Kemampuan</b></h5>
+                    <a style="margin-bottom: 10px;" href="{{ profil.portofolio.url }}" download  class="btn btn-dark float-right">Download</a>
+                  </div>
+                  <form method="POST" action="../upload/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="document" multiple>
+                    <input type="submit" value="upload">
+                  </form>
+                </div>
+                <div class="w3-container w3-card w3-white w3-margin-bottom">
+                  <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>PAKET :</h2>
+                  <div class="w3-container">
+                    {% for d in pk2 %}
+                    <h4><b>Nama Paket : {{d.nama_pkt}}</b></h4>
+                    <a href="/customer/{{ d.no_pkt }}/delpaket" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    <h4>Jumlah Pertemuan : {{d.jml_pertemuan}}</h4>
+                    <table width=100% border="1px" text-align="center">
+                      <tr>
+                        <td>Hari</td>
+                        <td>Jam</td>
+                      </tr>
+                      <tr>
+                        <td>{{d.hari_1}}</td>
+                        <td>{{d.jam_1}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{d.hari_2}}</td>
+                        <td>{{d.jam_2}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{d.hari_3}}</td>
+                        <td>{{d.jam_3}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{d.hari_4}}</td>
+                        <td>{{d.jam_4}}</td>
+                      </tr>
+                    </table>
+                    <h4>Biaya : Rp.{{d.biaya}};</h4>
+                    <hr>
+                    {% endfor %}
+                    
+                      <a href="{% url 'paket_url' %}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                    
+                    
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer>
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area footer-bg">
+                <div class="container">
+                    <div class="footer-border">
+                         <div class="row d-flex justify-content-between align-items-center">
+                             <div class="col-xl-10 col-lg-10 ">
+                                 <div class="footer-copy-right">
+                                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://github.com/adi-em" target="_blank">Jasa</a>
+      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                 </div>
+                             </div>
+                             <div class="col-xl-2 col-lg-2">
+                                 <div class="footer-social f-right">
+                                     
+                                 </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End-->
+        </footer>
+        
+
+{% endblock %}
